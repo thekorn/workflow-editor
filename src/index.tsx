@@ -2,8 +2,11 @@
 import './index.css';
 import { render } from 'solid-js/web';
 import 'solid-devtools';
+import { attachDevtoolsOverlay } from '@solid-devtools/overlay';
 import { WorkflowEditor } from './editor';
 import type { Workflow } from './types';
+
+attachDevtoolsOverlay();
 
 const root = document.getElementById('root');
 
