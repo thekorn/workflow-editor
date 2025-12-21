@@ -4,6 +4,8 @@ import type { Side } from '../types';
 const Port: Component<{ side: Side }> = ({ side }) => {
   return (
     <div
+      data-port
+      data-side={side}
       class="absolute w-5 h-5 border-[3px] rounded-full group-hover:opacity-100 opacity-0"
       classList={{
         'bg-radial-[Circle_at_Center,var(--color-red-700)_3px,transparent_4px]': true,

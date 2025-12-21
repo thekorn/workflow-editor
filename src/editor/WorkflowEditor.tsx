@@ -1,8 +1,15 @@
-import { type Component, createSignal } from 'solid-js';
-import { EdgesUI } from '../edges';
-import { NodesUI } from '../nodes';
-import type { Drag, Workflow } from '../types';
-import { subVec } from '../utils';
+import { type Component, createSignal } from "solid-js";
+import { EdgesUI } from "../edges";
+import { NodesUI } from "../nodes";
+import {
+  type Drag,
+  type Edge,
+  isDragEdge,
+  isDragNode,
+  type Side,
+  type Workflow,
+} from "../types";
+import { subVec } from "../utils";
 
 const WorkflowEditor: Component<{ workflowConfig: Workflow }> = ({
   workflowConfig,
@@ -12,13 +19,25 @@ const WorkflowEditor: Component<{ workflowConfig: Workflow }> = ({
 
   const onMouseDown = (event: MouseEvent) => {
     const targetElement = event.target as HTMLElement;
-    const nodeElement = targetElement.closest('[data-node]');
-    if (nodeElement) {
+    const nodeElement = targetElement.closest<HTMLElement>("[data-node]");
+    const portElement = targetElement.closest<HTMLElement>("[data-port]");
+    const mousePos = { x: event.clientX, y: event.clientY };
+    if (portElement && nodeElement) {
+      // create an edge
+      //console.log("TODO: Creating edge");
       event.preventDefault();
-      const mousePos = { x: event.clientX, y: event.clientY };
+      //const fromSide = portElement.dataset.side as Side;
+      //setDrag({
+      //  type: "edge",
+      //  fromNodeId: nodeElement.id,
+      //  fromSide,
+      //  pos: mousePos,
+      //});
+    } else if (nodeElement) {
+      event.preventDefault();
       const nodeBox = nodeElement.getBoundingClientRect();
       const posRelToNode = subVec(mousePos, nodeBox);
-      setDrag({ id: nodeElement.id, posRelToNode });
+      setDrag({ type: "node", id: nodeElement.id, posRelToNode });
     }
   };
 
@@ -26,11 +45,12 @@ const WorkflowEditor: Component<{ workflowConfig: Workflow }> = ({
     if (!drag()) return;
     setWorkflow((workflow) => {
       const draggedNode = drag();
-      if (!draggedNode) return workflow;
+      if (!isDragNode(draggedNode)) return workflow;
       const node = workflow.nodes[draggedNode.id];
       if (!node) return workflow;
 
       const mousePos = { x: event.clientX, y: event.clientY };
+      // console.log("change mouse pos", mousePos);
 
       return {
         ...workflow,
@@ -45,7 +65,34 @@ const WorkflowEditor: Component<{ workflowConfig: Workflow }> = ({
     });
   };
 
-  const onMouseUp = () => {
+  const onMouseUp = (event: MouseEvent) => {
+    const d = drag();
+    if (isDragEdge(d)) {
+      // create the edge
+      const targetElement = event.target as HTMLElement;
+      const nodeElement = targetElement.closest<HTMLElement>("[data-node]");
+      const portElement = targetElement.closest<HTMLElement>("[data-port]");
+      if (nodeElement && portElement) {
+        const to = nodeElement.id;
+        const toSide = portElement.dataset.side as Side;
+        const newEdge: Edge = {
+          id: Math.random().toString(),
+          from: d.fromNodeId,
+          to,
+          fromSide: d.fromSide,
+          toSide,
+        };
+        setWorkflow((workflow) => {
+          return {
+            ...workflow,
+            edges: {
+              ...workflow.edges,
+              [newEdge.id]: newEdge,
+            },
+          };
+        });
+      }
+    }
     setDrag();
   };
 
@@ -56,12 +103,12 @@ const WorkflowEditor: Component<{ workflowConfig: Workflow }> = ({
       on:mousemove={onMouseMove}
       class="h-full bg-gray-100 bg-repeat"
       classList={{
-        'bg-size-[50px_50px]': true,
-        'bg-radial-[Circle_at_Center,var(--color-gray-300)_1px,transparent_2px]': true,
+        "bg-size-[50px_50px]": true,
+        "bg-radial-[Circle_at_Center,var(--color-gray-300)_1px,transparent_2px]": true,
       }}
     >
       <NodesUI workflow={workflow} />
-      <EdgesUI workflow={workflow} />
+      <EdgesUI workflow={workflow} drag={drag} />
     </div>
   );
 };

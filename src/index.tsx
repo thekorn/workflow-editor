@@ -49,14 +49,14 @@ const EXAMPLE_WORKFLOW: Workflow = {
       toSide: 'left',
       title: 'Edge 1',
     },
-    'edge-2': {
-      id: 'edge-2',
-      from: 'node-2',
-      to: 'node-3',
-      fromSide: 'right',
-      toSide: 'left',
-      title: 'Edge 2',
-    },
+    // 'edge-2': {
+    //   id: 'edge-2',
+    //   from: 'node-2',
+    //   to: 'node-3',
+    //   fromSide: 'right',
+    //   toSide: 'left',
+    //   title: 'Edge 2',
+    // },
   },
 } as const;
 
