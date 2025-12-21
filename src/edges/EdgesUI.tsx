@@ -1,8 +1,8 @@
-import { type Accessor, type Component, createMemo, For, Show } from "solid-js";
-import { type Drag, isDragEdge, type Side, type Workflow } from "../types";
-import EdgeMarker from "./EdgeMarker";
-import EdgeUI from "./EdgeUI";
-import { getPortPosition } from "./utils";
+import { type Accessor, type Component, createMemo, For, Show } from 'solid-js';
+import { type Drag, isDragEdge, type Side, type Workflow } from '../types';
+import EdgeMarker from './EdgeMarker';
+import EdgeUI from './EdgeUI';
+import { getPortPosition } from './utils';
 
 const EdgesUI: Component<{
   workflow: Accessor<Workflow>;

@@ -3,7 +3,6 @@ import type { Node } from '../types';
 import Port from './Port';
 
 const NodeUI: Component<{ node: Node }> = ({ node }) => {
-  //console.log("render NodeUI", node);
   return (
     <div
       id={node.id}

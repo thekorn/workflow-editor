@@ -1,6 +1,6 @@
-import { type Component, createSignal } from "solid-js";
-import { EdgesUI } from "../edges";
-import { NodesUI } from "../nodes";
+import { type Component, createSignal } from 'solid-js';
+import { EdgesUI } from '../edges';
+import { NodesUI } from '../nodes';
 import {
   type Drag,
   type Edge,
@@ -8,8 +8,8 @@ import {
   isDragNode,
   type Side,
   type Workflow,
-} from "../types";
-import { subVec } from "../utils";
+} from '../types';
+import { subVec } from '../utils';
 
 const WorkflowEditor: Component<{ workflowConfig: Workflow }> = ({
   workflowConfig,
@@ -19,16 +19,15 @@ const WorkflowEditor: Component<{ workflowConfig: Workflow }> = ({
 
   const onMouseDown = (event: MouseEvent) => {
     const targetElement = event.target as HTMLElement;
-    const nodeElement = targetElement.closest<HTMLElement>("[data-node]");
-    const portElement = targetElement.closest<HTMLElement>("[data-port]");
+    const nodeElement = targetElement.closest<HTMLElement>('[data-node]');
+    const portElement = targetElement.closest<HTMLElement>('[data-port]');
     const mousePos = { x: event.clientX, y: event.clientY };
     if (portElement && nodeElement) {
       // create an edge
-      console.log("TODO: Creating edge");
       event.preventDefault();
       const fromSide = portElement.dataset.side as Side;
       setDrag({
-        type: "edge",
+        type: 'edge',
         fromNodeId: nodeElement.id,
         fromSide,
         pos: mousePos,
@@ -37,7 +36,7 @@ const WorkflowEditor: Component<{ workflowConfig: Workflow }> = ({
       event.preventDefault();
       const nodeBox = nodeElement.getBoundingClientRect();
       const posRelToNode = subVec(mousePos, nodeBox);
-      setDrag({ type: "node", id: nodeElement.id, posRelToNode });
+      setDrag({ type: 'node', id: nodeElement.id, posRelToNode });
     }
   };
 
@@ -78,8 +77,8 @@ const WorkflowEditor: Component<{ workflowConfig: Workflow }> = ({
     if (isDragEdge(d)) {
       // create the edge
       const targetElement = event.target as HTMLElement;
-      const nodeElement = targetElement.closest<HTMLElement>("[data-node]");
-      const portElement = targetElement.closest<HTMLElement>("[data-port]");
+      const nodeElement = targetElement.closest<HTMLElement>('[data-node]');
+      const portElement = targetElement.closest<HTMLElement>('[data-port]');
       if (nodeElement && portElement) {
         const to = nodeElement.id;
         const toSide = portElement.dataset.side as Side;
@@ -111,8 +110,8 @@ const WorkflowEditor: Component<{ workflowConfig: Workflow }> = ({
       on:mousemove={onMouseMove}
       class="h-full bg-gray-100 bg-repeat"
       classList={{
-        "bg-size-[50px_50px]": true,
-        "bg-radial-[Circle_at_Center,var(--color-gray-300)_1px,transparent_2px]": true,
+        'bg-size-[50px_50px]': true,
+        'bg-radial-[Circle_at_Center,var(--color-gray-300)_1px,transparent_2px]': true,
       }}
     >
       <NodesUI workflow={workflow} />
