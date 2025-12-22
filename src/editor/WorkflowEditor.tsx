@@ -10,11 +10,12 @@ import {
   type Workflow,
 } from '../types';
 import { snapToGrid, subVec } from '../utils';
+import { createWorkflowStore, WorkflowContext } from './store';
 
 const WorkflowEditor: Component<{ workflowConfig: Workflow }> = ({
   workflowConfig,
 }) => {
-  const [workflow, setWorkflow] = createSignal<Workflow>(workflowConfig);
+  const [workflow, setWorkflow] = createWorkflowStore(workflowConfig);
   const [drag, setDrag] = createSignal<Drag>();
 
   const onMouseDown = (event: MouseEvent) => {
@@ -83,7 +84,7 @@ const WorkflowEditor: Component<{ workflowConfig: Workflow }> = ({
         const to = nodeElement.id;
         const toSide = portElement.dataset.side as Side;
 
-        const exists = Object.values(workflow().edges).some(
+        const exists = Object.values(workflow.edges).some(
           (edge) =>
             edge.from === d.fromNodeId &&
             edge.to === to &&
@@ -127,19 +128,21 @@ const WorkflowEditor: Component<{ workflowConfig: Workflow }> = ({
   };
 
   return (
-    <div
-      on:mousedown={onMouseDown}
-      on:mouseup={onMouseUp}
-      on:mousemove={onMouseMove}
-      class="h-full bg-gray-100 bg-repeat"
-      classList={{
-        'bg-size-[50px_50px]': true,
-        'bg-radial-[Circle_at_Center,var(--color-gray-300)_1px,transparent_2px]': true,
-      }}
-    >
-      <NodesUI workflow={workflow} />
-      <EdgesUI workflow={workflow} drag={drag} />
-    </div>
+    <WorkflowContext.Provider value={[workflow, setWorkflow]}>
+      <div
+        on:mousedown={onMouseDown}
+        on:mouseup={onMouseUp}
+        on:mousemove={onMouseMove}
+        class="h-full bg-gray-100 bg-repeat"
+        classList={{
+          'bg-size-[50px_50px]': true,
+          'bg-radial-[Circle_at_Center,var(--color-gray-300)_1px,transparent_2px]': true,
+        }}
+      >
+        <NodesUI />
+        <EdgesUI drag={drag} />
+      </div>
+    </WorkflowContext.Provider>
   );
 };
 
