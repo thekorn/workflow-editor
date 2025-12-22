@@ -1,6 +1,16 @@
 import type { Component } from 'solid-js';
-import type { Node } from '../types';
+import { Dynamic } from 'solid-js/web';
+import type { Node, NodeShape } from '../types';
 import Port from './Port';
+import { Diamond, Ellipse, Pill, Rectangle } from './shapes';
+import type { ShapeComponent } from './shapes/types';
+
+const shapes: Record<NodeShape, ShapeComponent> = {
+  rectangle: Rectangle,
+  diamond: Diamond,
+  ellipse: Ellipse,
+  pill: Pill,
+};
 
 const NodeUI: Component<{ node: Node }> = ({ node }) => {
   return (
@@ -15,17 +25,11 @@ const NodeUI: Component<{ node: Node }> = ({ node }) => {
         height: `${node.height}px`,
       }}
     >
-      <svg class="absolute top-0 left-0 w-full h-full overflow-visible stroke-gray-300 stroke-2 fill-white -z-10">
-        <title>background</title>
-        <rect
-          x={0}
-          y={0}
-          width={node.width}
-          height={node.height}
-          ry={5}
-          rx={5}
-        />
-      </svg>
+      <Dynamic
+        component={shapes[node.shape]}
+        width={node.width}
+        height={node.height}
+      />
       {node.title}
       <Port side="left" />
       <Port side="right" />

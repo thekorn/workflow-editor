@@ -24,7 +24,8 @@
   },
   "dependencies": {
     "@solid-devtools/overlay": "^0.33.5",
-    "solid-js": "^1.9.10"
+    "solid-js": "^1.9.10",
+    "tailwind-merge": "^3.4.0"
   },
   "pnpm": {
     "overrides": {
