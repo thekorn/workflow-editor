@@ -5,20 +5,23 @@ import {
   type Drag,
   type DragEdge,
   type Edge,
+  type IconProps,
   isDragEdge,
   isDragGrid,
   isDragNode,
+  type NodeTemplate,
   type Side,
   type Vec,
-  type Workflow,
 } from '../types';
 import { addVec, snapToGrid, subVec } from '../utils';
-import { createWorkflowStore, WorkflowContext } from './store';
+import { useWorkflowContext } from './store';
+import TemplateToolbar from './TemplateToolbar';
 
-const WorkflowEditor: Component<{ workflowConfig: Workflow }> = ({
-  workflowConfig,
-}) => {
-  const [workflow, setWorkflow] = createWorkflowStore(workflowConfig);
+const WorkflowEditor: Component<{
+  nodeTemplates: NodeTemplate[];
+  Icon: Component<IconProps>;
+}> = ({ nodeTemplates, Icon }) => {
+  const [workflow, setWorkflow] = useWorkflowContext();
   const [drag, setDrag] = createSignal<Drag>();
   const [translation, setTranslation] = createSignal<Vec>({ x: 0, y: 0 });
   let contentRef!: HTMLDivElement;
@@ -148,32 +151,31 @@ const WorkflowEditor: Component<{ workflowConfig: Workflow }> = ({
   };
 
   return (
-    <WorkflowContext.Provider value={[workflow, setWorkflow]}>
+    <div
+      data-grid
+      on:mousedown={onMouseDown}
+      on:mouseup={onMouseUp}
+      on:mousemove={onMouseMove}
+      class="h-full bg-gray-100 bg-repeat"
+      classList={{
+        'cursor-grabbing': isDragGrid(drag()),
+        'cursor-grab': !isDragGrid(drag()),
+        'bg-size-[50px_50px]': true,
+        'bg-radial-[Circle_at_Center,var(--color-gray-300)_1px,transparent_2px]': true,
+      }}
+      style={{
+        'background-position': `${translation().x}px ${translation().y}px`,
+      }}
+    >
+      <TemplateToolbar nodeTemplates={nodeTemplates} Icon={Icon} />
       <div
-        data-grid
-        on:mousedown={onMouseDown}
-        on:mouseup={onMouseUp}
-        on:mousemove={onMouseMove}
-        class="h-full bg-gray-100 bg-repeat"
-        classList={{
-          'cursor-grabbing': isDragGrid(drag()),
-          'cursor-grab': !isDragGrid(drag()),
-          'bg-size-[50px_50px]': true,
-          'bg-radial-[Circle_at_Center,var(--color-gray-300)_1px,transparent_2px]': true,
-        }}
-        style={{
-          'background-position': `${translation().x}px ${translation().y}px`,
-        }}
+        ref={contentRef}
+        style={{ translate: `${translation().x}px ${translation().y}px` }}
       >
-        <div
-          ref={contentRef}
-          style={{ translate: `${translation().x}px ${translation().y}px` }}
-        >
-          <NodesUI />
-          <EdgesUI drag={drag} />
-        </div>
+        <NodesUI />
+        <EdgesUI drag={drag} />
       </div>
-    </WorkflowContext.Provider>
+    </div>
   );
 };
 

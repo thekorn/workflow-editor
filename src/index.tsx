@@ -4,7 +4,9 @@ import { render } from 'solid-js/web';
 import 'solid-devtools';
 import { attachDevtoolsOverlay } from '@solid-devtools/overlay';
 import { WorkflowEditor } from './editor';
-import type { Workflow } from './types';
+import Icon from './editor/Icon';
+import { createWorkflowStore, WorkflowContext } from './editor/store';
+import type { NodeTemplate, Workflow } from './types';
 
 attachDevtoolsOverlay();
 
@@ -75,5 +77,58 @@ const EXAMPLE_WORKFLOW: Workflow = {
   },
 } as const;
 
-// biome-ignore lint/style/noNonNullAssertion: we know its there
-render(() => <WorkflowEditor workflowConfig={EXAMPLE_WORKFLOW} />, root!);
+const EXAMPLE_NODE_TEMPLATES: NodeTemplate[] = [
+  {
+    id: 'start',
+    shape: 'pill',
+    title: 'Start',
+    width: 120,
+    height: 40,
+    icon: 'FileInput',
+  },
+  {
+    id: 'brightness-condition',
+    shape: 'diamond',
+    title: 'Brightness?',
+    width: 120,
+    height: 100,
+    icon: 'Sun',
+  },
+  {
+    id: 'crop',
+    shape: 'rectangle',
+    title: 'Crop',
+    width: 140,
+    height: 60,
+    icon: 'Crop',
+  },
+  {
+    id: 'rotate',
+    shape: 'rectangle',
+    title: 'Rotate',
+    width: 120,
+    height: 60,
+    icon: 'RotateCw',
+  },
+  {
+    id: 'blur',
+    shape: 'rectangle',
+    title: 'Blur',
+    width: 120,
+    height: 60,
+    icon: 'Droplet',
+  },
+] as const;
+
+render(
+  () => {
+    const [workflow, setWorkflow] = createWorkflowStore(EXAMPLE_WORKFLOW);
+    return (
+      <WorkflowContext.Provider value={[workflow, setWorkflow]}>
+        <WorkflowEditor nodeTemplates={EXAMPLE_NODE_TEMPLATES} Icon={Icon} />
+      </WorkflowContext.Provider>
+    );
+  },
+  // biome-ignore lint/style/noNonNullAssertion: we know its there
+  root!,
+);

@@ -1,3 +1,6 @@
+import { icons, type LucideProps } from 'lucide-solid';
+export type IconName = Extract<keyof typeof icons, 'FileInput' | 'Sun' | 'Crop' |'RotateCw' | 'Droplet'>;
+
 export type Node = {
   id: string;
   x: number;
@@ -49,3 +52,19 @@ export type Edge = {
   toSide: Side;
   title?: string;
 };
+
+export type NodeTemplate = {
+  id: string;
+  width: number;
+  height: number;
+  shape: NodeShape;
+  title: string;
+  icon: IconName;
+};
+
+export interface IconProps extends LucideProps {
+  name: IconName;
+}
+
+export const isLucidIcon = (name?: string): name is IconName =>
+  !!name && name in icons;

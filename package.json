@@ -24,6 +24,7 @@
   },
   "dependencies": {
     "@solid-devtools/overlay": "^0.33.5",
+    "lucide-solid": "^0.562.0",
     "solid-js": "^1.9.10",
     "tailwind-merge": "^3.4.0"
   },
