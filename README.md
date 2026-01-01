@@ -38,7 +38,8 @@ Open [http://localhost:3000](http://localhost:3000) to view the editor.
 | `pnpm dev`       | Start development server       |
 | `pnpm build`     | Build for production           |
 | `pnpm serve`     | Preview production build       |
-| `pnpm check`     | Run Biome linter and formatter |
+| `pnpm check`     | Run Biome linter (no fixes)    |
+| `pnpm check:fix` | Run Biome linter and formatter |
 | `pnpm typecheck` | Run TypeScript type checking   |
 
 ## Project Structure

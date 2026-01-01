@@ -4,7 +4,8 @@
 - **Dev server**: `pnpm dev`
 - **Build**: `pnpm build` (production build to `dist/`)
 - **Preview build**: `pnpm serve`
-- **Lint & format**: `pnpm check` (uses Biome, auto-fixes)
+- **Lint**: `pnpm check` (uses Biome, no fixes)
+- **Lint & format**: `pnpm check:fix` (uses Biome, auto-fixes)
 - **Typecheck**: `pnpm typecheck`
 
 ## Code Style
