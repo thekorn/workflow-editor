@@ -4,7 +4,7 @@ import {
   type ParentComponent,
   useContext,
 } from 'solid-js';
-import type { Drag } from '../types';
+import type { Drag } from '@/types';
 
 type DragContextValue = {
   drag: ReturnType<typeof createSignal<Drag | undefined>>[0];

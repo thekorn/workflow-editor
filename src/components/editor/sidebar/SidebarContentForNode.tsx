@@ -1,6 +1,6 @@
 import { type Accessor, type Component, createMemo } from 'solid-js';
-import { useSelectionContext, useWorkflowContext } from '../../../stores';
-import type { Selection } from '../../../types';
+import { useSelectionContext, useWorkflowContext } from '@/stores';
+import type { Selection } from '@/types';
 import DeleteButton from './DeleteButton';
 
 const SidebarContentForNode: Component<{

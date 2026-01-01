@@ -3,7 +3,7 @@ import './index.css';
 import { render } from 'solid-js/web';
 import 'solid-devtools';
 import { attachDevtoolsOverlay } from '@solid-devtools/overlay';
-import type { NodeTemplate, Workflow } from './types';
+import type { NodeTemplate, Workflow } from '@/types';
 import WorkflowApp from './WorkflowApp';
 
 attachDevtoolsOverlay();

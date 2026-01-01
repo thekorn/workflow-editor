@@ -1,7 +1,7 @@
 import { type Component, createMemo } from 'solid-js';
 import { Dynamic } from 'solid-js/web';
-import { useSelectionContext } from '../../stores';
-import type { Node, NodeShape } from '../../types';
+import { useSelectionContext } from '@/stores';
+import type { Node, NodeShape } from '@/types';
 import Port from './Port';
 import { Diamond, Ellipse, Pill, Rectangle } from './shapes';
 import type { ShapeComponent } from './shapes/types';

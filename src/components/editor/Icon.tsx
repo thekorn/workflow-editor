@@ -1,6 +1,6 @@
 import { Crop, Droplet, FileInput, RotateCw, Sun } from 'lucide-solid';
 import { type Component, Match, Switch, splitProps } from 'solid-js';
-import type { IconProps } from '../../types';
+import type { IconProps } from '@/types';
 
 const Icon: Component<IconProps> = (props) => {
   const [local, others] = splitProps(props, ['name']);

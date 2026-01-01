@@ -1,6 +1,6 @@
 import { type Component, createMemo, For } from 'solid-js';
-import { useDragContext } from '../../stores';
-import { type IconProps, isDragNode, type NodeTemplate } from '../../types';
+import { useDragContext } from '@/stores';
+import { type IconProps, isDragNode, type NodeTemplate } from '@/types';
 
 const TemplateToolbar: Component<{
   nodeTemplates: NodeTemplate[];

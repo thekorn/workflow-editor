@@ -16,6 +16,11 @@
     // Type Checking & Safety
     "strict": true,
     "types": ["vite/client"],
-    "skipLibCheck": true
+    "skipLibCheck": true,
+
+    // Paths
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   }
 }

@@ -1,6 +1,6 @@
 import { type Accessor, type Component, createMemo, Show } from 'solid-js';
-import { useSelectionContext } from '../../stores';
-import type { Vec } from '../../types';
+import { useSelectionContext } from '@/stores';
+import type { Vec } from '@/types';
 
 const EdgeUI: Component<{
   id?: string;

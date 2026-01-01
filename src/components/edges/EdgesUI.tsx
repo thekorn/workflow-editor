@@ -1,6 +1,6 @@
 import { type Component, createMemo, For, Show } from 'solid-js';
-import { useDragContext, useWorkflowContext } from '../../stores';
-import { isDragEdge, type Side } from '../../types';
+import { useDragContext, useWorkflowContext } from '@/stores';
+import { isDragEdge, type Side } from '@/types';
 import EdgeMarker from './EdgeMarker';
 import EdgeUI from './EdgeUI';
 import { getPortPosition } from './utils';

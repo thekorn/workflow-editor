@@ -1,5 +1,5 @@
 import type { Component } from 'solid-js';
-import type { Side } from '../../types';
+import type { Side } from '@/types';
 
 const Port: Component<{ side: Side }> = ({ side }) => {
   return (

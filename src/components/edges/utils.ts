@@ -1,4 +1,4 @@
-import type { Node, Side, Vec } from '../../types';
+import type { Node, Side, Vec } from '@/types';
 import { addVec } from '../../utils';
 
 export function getPortPosition(node: Node, side: Side): Vec {

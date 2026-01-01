@@ -3,7 +3,7 @@ import {
   useDragContext,
   useSelectionContext,
   useWorkflowContext,
-} from '../../stores';
+} from '@/stores';
 import {
   type DragEdge,
   type Edge,
@@ -15,7 +15,7 @@ import {
   type NodeTemplate,
   type Side,
   type Vec,
-} from '../../types';
+} from '@/types';
 import { addVec, snapToGrid, subVec } from '../../utils';
 import { EdgesUI } from '../edges';
 import { NodesUI } from '../nodes';

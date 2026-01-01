@@ -1,6 +1,6 @@
 import { createContext, type ParentComponent, useContext } from 'solid-js';
 import { createStore } from 'solid-js/store';
-import type { Edge, Node, Workflow } from '../types';
+import type { Edge, Node, Workflow } from '@/types';
 
 function createWorkflowStore(workflow: Workflow) {
   const [workflowState, setWorkflow] = createStore<Workflow>(workflow);

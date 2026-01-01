@@ -1,4 +1,4 @@
-import type { Vec } from './types';
+import type { Vec } from '@/types';
 
 export function addVec(a: Vec, b: Vec): Vec {
   return { x: a.x + b.x, y: a.y + b.y };

@@ -4,7 +4,7 @@ import {
   type ParentComponent,
   useContext,
 } from 'solid-js';
-import type { Selection } from '../types';
+import type { Selection } from '@/types';
 
 type SelectionContextValue = {
   selection: ReturnType<typeof createSignal<Selection | undefined>>[0];
