@@ -28,7 +28,6 @@ const EdgeUI: Component<{
       id={id}
       data-edge
       classList={{
-        'stroke-1 stroke-gray-700': isSelected(),
         'cursor-pointer': connected,
       }}
     >
