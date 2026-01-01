@@ -2,6 +2,8 @@
 
 A visual workflow/diagram editor built with SolidJS and TypeScript.
 
+![Flow Editor Sample](./docs/sample.png)
+
 ## Features
 
 - Drag and drop nodes onto a canvas
@@ -9,6 +11,8 @@ A visual workflow/diagram editor built with SolidJS and TypeScript.
 - Multiple node shapes: Rectangle, Diamond, Pill, Ellipse
 - Pan and zoom the canvas
 - Real-time devtools overlay for debugging
+- Selection sidebar for editing node/edge properties
+- Delete nodes and edges
 
 ## Tech Stack
 
@@ -29,21 +33,24 @@ Open [http://localhost:3000](http://localhost:3000) to view the editor.
 
 ## Commands
 
-| Command | Description |
-|---------|-------------|
-| `pnpm dev` | Start development server |
-| `pnpm build` | Build for production |
-| `pnpm serve` | Preview production build |
-| `pnpm check` | Run Biome linter and formatter |
-| `pnpm typecheck` | Run TypeScript type checking |
+| Command          | Description                    |
+| ---------------- | ------------------------------ |
+| `pnpm dev`       | Start development server       |
+| `pnpm build`     | Build for production           |
+| `pnpm serve`     | Preview production build       |
+| `pnpm check`     | Run Biome linter and formatter |
+| `pnpm typecheck` | Run TypeScript type checking   |
 
 ## Project Structure
 
 ```
 src/
-├── edges/          # Edge components and utilities
-├── editor/         # Main editor component and store
-├── nodes/          # Node components and shapes
-├── types.ts        # TypeScript type definitions
-└── utils.ts        # Shared utilities
+├── components/
+│   ├── edges/           # Edge components and utilities
+│   ├── editor/          # Main editor, toolbar, and sidebar components
+│   └── nodes/           # Node components, ports, and shapes
+├── stores/              # SolidJS stores for state management
+├── types.ts             # TypeScript type definitions
+├── utils.ts             # Shared utilities
+└── WorkflowApp.tsx      # Root application component
 ```
