@@ -1,5 +1,5 @@
 import { type Accessor, type Component, createMemo } from 'solid-js';
-import { useWorkflowContext } from '../../../stores';
+import { useSelectionContext, useWorkflowContext } from '../../../stores';
 import type { Selection } from '../../../types';
 import DeleteButton from './DeleteButton';
 
@@ -7,6 +7,7 @@ const SidebarContentForNode: Component<{
   selection: Accessor<Selection>;
 }> = ({ selection }) => {
   const { workflow, updateNode, deleteNode } = useWorkflowContext();
+  const { setSelection } = useSelectionContext();
   const node = createMemo(() => {
     return workflow.nodes[selection().id];
   });
@@ -55,8 +56,8 @@ const SidebarContentForNode: Component<{
       <div class="mt-4 grid">
         <DeleteButton
           onDelete={() => {
+            setSelection();
             deleteNode(node().id);
-            //setSelection();
           }}
         />
       </div>

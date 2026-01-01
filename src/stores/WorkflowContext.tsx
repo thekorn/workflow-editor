@@ -8,8 +8,12 @@ function createWorkflowStore(workflow: Workflow) {
   function deleteNode(nodeId: string) {
     setWorkflow((workflow) => {
       const { [nodeId]: _, ...rest } = workflow.nodes;
+      const edges = Object.entries(workflow.edges).filter(
+        ([_, edge]) => edge.from !== nodeId && edge.to !== nodeId,
+      );
       return {
         ...workflow,
+        edges: Object.fromEntries(edges),
         nodes: rest,
       };
     });
