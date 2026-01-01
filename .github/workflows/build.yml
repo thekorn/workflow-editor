@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
 
 jobs:
-  build:
+  setup:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -28,11 +28,23 @@ jobs:
       - name: Install dependencies
         run: pnpm install
 
+  build:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
       - name: Build
         run: pnpm build
 
+  check:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
       - name: Check
         run: pnpm check
 
+  typecheck:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
       - name: Typecheck
         run: pnpm typecheck
