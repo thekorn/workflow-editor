@@ -1,12 +1,12 @@
 import { type Accessor, type Component, For } from 'solid-js';
-import { useWorkflowContext } from '../editor/store';
+import { useWorkflowContext } from '../editor/stores';
 import type { Selection } from '../types';
 import NodeUI from './NodeUI';
 
 const NodesUI: Component<{ selection: Accessor<Selection | undefined> }> = ({
   selection,
 }) => {
-  const [workflow] = useWorkflowContext();
+  const { workflow } = useWorkflowContext();
 
   return (
     <For each={Object.values(workflow.nodes)}>

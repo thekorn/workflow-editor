@@ -1,22 +1,15 @@
 import { type Accessor, type Component, createMemo } from 'solid-js';
-import type { Edge, Selection } from '../../types';
-import { useWorkflowContext } from '../store';
+import type { Selection } from '../../types';
+import { useWorkflowContext } from '../stores';
 import DeleteButton from './DeleteButton';
 
 const SidebarContentForEdge: Component<{
   selection: Accessor<Selection>;
 }> = ({ selection }) => {
-  const [workflow, setWorkflow] = useWorkflowContext();
+  const { workflow, updateEdge, deleteEdge } = useWorkflowContext();
   const edge = createMemo(() => {
     return workflow.edges[selection().id];
   });
-
-  function updateEdge(partialEdge: Partial<Edge>) {
-    setWorkflow((workflow) => ({
-      ...workflow,
-      edges: { ...workflow.edges, [edge().id]: { ...edge(), ...partialEdge } },
-    }));
-  }
 
   return (
     <>
@@ -31,12 +24,19 @@ const SidebarContentForEdge: Component<{
             value={edge().title}
             autofocus
             class="overflow-hidden rounded border border-gray-200"
-            on:input={(e) => updateEdge({ title: e.target.value || '' })}
+            on:input={(e) =>
+              updateEdge(edge().id, { title: e.target.value || '' })
+            }
           ></textarea>
         </label>
       </div>
       <div class="mt-4 grid">
-        <DeleteButton />
+        <DeleteButton
+          onDelete={() => {
+            deleteEdge(edge().id);
+            //setSelection();
+          }}
+        />
       </div>
     </>
   );

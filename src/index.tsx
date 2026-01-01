@@ -5,7 +5,7 @@ import 'solid-devtools';
 import { attachDevtoolsOverlay } from '@solid-devtools/overlay';
 import { WorkflowEditor } from './editor';
 import Icon from './editor/Icon';
-import { createWorkflowStore, WorkflowContext } from './editor/store';
+import { WorkflowProvider } from './editor/stores';
 import type { NodeTemplate, Workflow } from './types';
 
 attachDevtoolsOverlay();
@@ -122,11 +122,10 @@ const EXAMPLE_NODE_TEMPLATES: NodeTemplate[] = [
 
 render(
   () => {
-    const [workflow, setWorkflow] = createWorkflowStore(EXAMPLE_WORKFLOW);
     return (
-      <WorkflowContext.Provider value={[workflow, setWorkflow]}>
+      <WorkflowProvider workflow={EXAMPLE_WORKFLOW}>
         <WorkflowEditor nodeTemplates={EXAMPLE_NODE_TEMPLATES} Icon={Icon} />
-      </WorkflowContext.Provider>
+      </WorkflowProvider>
     );
   },
   // biome-ignore lint/style/noNonNullAssertion: we know its there

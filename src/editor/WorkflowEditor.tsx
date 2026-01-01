@@ -17,14 +17,14 @@ import {
 } from '../types';
 import { addVec, snapToGrid, subVec } from '../utils';
 import SelectionSidebar from './sidebar';
-import { useWorkflowContext } from './store';
+import { useWorkflowContext } from './stores';
 import TemplateToolbar from './TemplateToolbar';
 
 const WorkflowEditor: Component<{
   nodeTemplates: NodeTemplate[];
   Icon: Component<IconProps>;
 }> = ({ nodeTemplates, Icon }) => {
-  const [workflow, setWorkflow] = useWorkflowContext();
+  const { workflow, setWorkflow } = useWorkflowContext();
   const [drag, setDrag] = createSignal<Drag>();
   const [selection, setSelection] = createSignal<Selection>();
   const [translation, setTranslation] = createSignal<Vec>({ x: 0, y: 0 });

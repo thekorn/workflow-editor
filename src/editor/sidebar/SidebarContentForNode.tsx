@@ -1,22 +1,15 @@
 import { type Accessor, type Component, createMemo } from 'solid-js';
-import type { Node, Selection } from '../../types';
-import { useWorkflowContext } from '../store';
+import type { Selection } from '../../types';
+import { useWorkflowContext } from '../stores';
 import DeleteButton from './DeleteButton';
 
 const SidebarContentForNode: Component<{
   selection: Accessor<Selection>;
 }> = ({ selection }) => {
-  const [workflow, setWorkflow] = useWorkflowContext();
+  const { workflow, updateNode, deleteNode } = useWorkflowContext();
   const node = createMemo(() => {
     return workflow.nodes[selection().id];
   });
-
-  function updateNode(partialNode: Partial<Node>) {
-    setWorkflow((workflow) => ({
-      ...workflow,
-      nodes: { ...workflow.nodes, [node().id]: { ...node(), ...partialNode } },
-    }));
-  }
 
   return (
     <>
@@ -31,7 +24,9 @@ const SidebarContentForNode: Component<{
             value={node().title}
             autofocus
             class="overflow-hidden rounded border border-gray-200"
-            on:input={(e) => updateNode({ title: e.target.value || '' })}
+            on:input={(e) =>
+              updateNode(node().id, { title: e.target.value || '' })
+            }
           ></textarea>
         </label>
         <label>
@@ -40,7 +35,9 @@ const SidebarContentForNode: Component<{
             type="number"
             value={node().width}
             class="overflow-hidden rounded border border-gray-200"
-            on:input={(e) => updateNode({ width: Number(e.target.value) })}
+            on:input={(e) =>
+              updateNode(node().id, { width: Number(e.target.value) })
+            }
           ></input>
         </label>
         <label>
@@ -49,12 +46,19 @@ const SidebarContentForNode: Component<{
             type="number"
             value={node().height}
             class="overflow-hidden rounded border border-gray-200"
-            on:input={(e) => updateNode({ height: Number(e.target.value) })}
+            on:input={(e) =>
+              updateNode(node().id, { height: Number(e.target.value) })
+            }
           ></input>
         </label>
       </div>
       <div class="mt-4 grid">
-        <DeleteButton />
+        <DeleteButton
+          onDelete={() => {
+            deleteNode(node().id);
+            //setSelection();
+          }}
+        />
       </div>
     </>
   );
