@@ -9,6 +9,7 @@ import {
   isDragEdge,
   isDragGrid,
   isDragNode,
+  type Node,
   type NodeTemplate,
   type Side,
   type Vec,
@@ -31,6 +32,8 @@ const WorkflowEditor: Component<{
     const nodeElement = targetElement.closest<HTMLElement>('[data-node]');
     const portElement = targetElement.closest<HTMLElement>('[data-port]');
     const gridElement = targetElement.closest<HTMLElement>('[data-grid]');
+    const nodeTemplateElement =
+      targetElement.closest<HTMLElement>('[data-template-id]');
     const contentBox = contentRef.getBoundingClientRect();
     const mousePos = { x: event.clientX, y: event.clientY };
     const mousePosRelToGrid = subVec(mousePos, contentBox);
@@ -50,13 +53,33 @@ const WorkflowEditor: Component<{
       const nodeBox = nodeElement.getBoundingClientRect();
       const posRelToNode = subVec(mousePos, nodeBox);
       setDrag({ type: 'node', id: nodeElement.id, posRelToNode });
-    } else if (gridElement) {
+    } else if (gridElement && !nodeTemplateElement) {
       event.preventDefault();
       setDrag({
         type: 'grid',
         startPos: mousePos,
         startTranslation: translation(),
       });
+    } else if (nodeTemplateElement) {
+      event.preventDefault();
+      const template = nodeTemplates.find(
+        (t) => t.id === nodeTemplateElement.dataset.templateId,
+      );
+      if (!template) return;
+      const posRelToNode: Vec = { x: 20, y: 20 };
+      const node: Node = {
+        id: Math.random().toString(),
+        ...subVec(mousePosRelToGrid, posRelToNode),
+        width: template.width,
+        height: template.height,
+        shape: template.shape,
+        title: template.title,
+      };
+      setWorkflow((workflow) => ({
+        ...workflow,
+        nodes: { ...workflow.nodes, [node.id]: node },
+      }));
+      setDrag({ type: 'node', id: node.id, posRelToNode });
     }
   };
 
@@ -167,7 +190,7 @@ const WorkflowEditor: Component<{
         'background-position': `${translation().x}px ${translation().y}px`,
       }}
     >
-      <TemplateToolbar nodeTemplates={nodeTemplates} Icon={Icon} />
+      <TemplateToolbar nodeTemplates={nodeTemplates} Icon={Icon} drag={drag} />
       <div
         ref={contentRef}
         style={{ translate: `${translation().x}px ${translation().y}px` }}
