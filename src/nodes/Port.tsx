@@ -6,7 +6,7 @@ const Port: Component<{ side: Side }> = ({ side }) => {
     <div
       data-port
       data-side={side}
-      class="absolute w-5 h-5 border-[3px] rounded-full group-hover:opacity-100 opacity-0"
+      class="absolute h-5 w-5 rounded-full border-[3px] opacity-0 group-hover:opacity-100"
       classList={{
         'bg-radial-[Circle_at_Center,var(--color-blue-700)_3px,transparent_4px]': true,
         '-left-[10px]': side === 'left',

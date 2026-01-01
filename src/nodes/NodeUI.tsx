@@ -17,7 +17,7 @@ const NodeUI: Component<{ node: Node }> = ({ node }) => {
     <div
       id={node.id}
       data-node
-      class="group cursor-move absolute justify-center items-center justify-items-center content-center text-center z-0"
+      class="group absolute z-0 cursor-move content-center items-center justify-center justify-items-center text-center"
       style={{
         left: `${node.x}px`,
         top: `${node.y}px`,

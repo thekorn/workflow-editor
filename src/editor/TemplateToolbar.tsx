@@ -6,17 +6,17 @@ const TemplateToolbar: Component<{
   Icon: Component<IconProps>;
 }> = ({ nodeTemplates, Icon }) => {
   return (
-    <div class="absolute max-w-24 left-4 top-24 rounded-xl overflow-hidden border-2 border-gray-300 bg-white z-10 justify-center flex-col items-center content-center divide-y-2 divide-gray-300">
+    <div class="absolute top-24 left-4 z-10 max-w-24 flex-col content-center items-center justify-center divide-y-2 divide-gray-300 overflow-hidden rounded-xl border-2 border-gray-300 bg-white">
       <For each={nodeTemplates}>
         {(nodeTemplate) => (
           <div
-            class="p-3 text-center text-xs cursor-move transition-all duration-100 ease-in hover:bg-gray-100"
+            class="cursor-move p-3 text-center text-xs transition-all duration-100 ease-in hover:bg-gray-100"
             data-template-id={nodeTemplate.id}
           >
             <Icon
               name={nodeTemplate.icon}
               size={25}
-              class="overflow-visible justify-self-center mb-2"
+              class="mb-2 justify-self-center overflow-visible"
             />
             {nodeTemplate.title}
           </div>

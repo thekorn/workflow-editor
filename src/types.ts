@@ -1,5 +1,8 @@
 import { icons, type LucideProps } from 'lucide-solid';
-export type IconName = Extract<keyof typeof icons, 'FileInput' | 'Sun' | 'Crop' |'RotateCw' | 'Droplet'>;
+export type IconName = Extract<
+  keyof typeof icons,
+  'FileInput' | 'Sun' | 'Crop' | 'RotateCw' | 'Droplet'
+>;
 
 export type Node = {
   id: string;
